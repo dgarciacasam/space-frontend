@@ -1,0 +1,16 @@
+@import '@fontsource/rampart-one';
+@import '@fontsource-variable/geist-mono';
+@import '@fontsource-variable/geist';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Geist Variable', Arial, monospace;
+}
+
+#title {
+  font-family: 'Rampart One', system-ui;
+  font-size: 1.4rem;
+}

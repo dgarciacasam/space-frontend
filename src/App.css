@@ -1,0 +1,10 @@
+#root {
+  margin: 0 auto;
+  padding-block: 1rem;
+  padding-inline: 2rem;
+  height: 100vh;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-weight: 300;
+}
