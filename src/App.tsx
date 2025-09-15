@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router'
 import './App.css'
 import { Dashboard } from './components/Dashboard'
-import { AuthScreen } from './components/AuthScreen'
+import { AuthScreen } from './components/auth/AuthScreen'
 
 function App() {
   return (
