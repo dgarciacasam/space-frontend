@@ -1,14 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router'
-import './App.css'
-import { Dashboard } from './components/Dashboard'
 import { AuthScreen } from './components/auth/AuthScreen'
+import { ProtectedRoutes } from './components/ProtectedRoutes'
+import Dashboard from './components/dashboard/Dashboard'
+import './App.css'
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AuthScreen />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path='/' element={<AuthScreen />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
   )
