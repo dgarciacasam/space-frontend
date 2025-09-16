@@ -13,12 +13,5 @@ body {
 #title {
   font-family: 'Rampart One', system-ui;
   font-size: 1.4rem;
-}
-
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-group(*) {
-  animation-duration: 3s;
+  text-align: center;
 }

@@ -12,7 +12,9 @@ export const AlternativeLoginButton = ({
   return (
     <button
       onClick={onClick}
-      className="flex justify-center items-center gap-2 font-semibold w-full px-4 py-3 rounded-md text-center bg-[#0A0A0A] text-white border border-gray-600"
+      className='flex justify-center items-center gap-2 font-semibold w-full 
+      px-4 py-3 rounded-md text-center bg-[#0A0A0A] text-white border border-gray-600 
+      hover:bg-neutral-900 transition-colors duration-200'
     >
       {logo}
       {children}
