@@ -1,21 +1,7 @@
-@import '@fontsource/rampart-one';
-@import '@fontsource-variable/geist-mono';
-@import '@fontsource-variable/geist';
-
-@import 'tw-animate-css';
 @import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
-
-body {
-  font-family: 'Geist Variable', Arial, monospace;
-}
-
-#title {
-  font-family: 'Rampart One', system-ui;
-  font-size: 1.4rem;
-  text-align: center;
-}
 
 :root {
   --background: oklch(1 0 0);
