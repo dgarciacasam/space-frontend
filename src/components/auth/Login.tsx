@@ -4,20 +4,25 @@ import GoogleLogo from '../icons/GoogleLogo'
 import GithubLogo from '../icons/GithubLogo'
 import UserLogo from '../icons/UserLogo'
 import { checkEmail, setGuestUser } from '../../../utils/utils'
+import type { AuthRes } from '@/types/types'
 
 interface LoginProps {
   setIsRegistering: (value: boolean) => void
 }
 
-async function login(credentials: FormData): Promise<any> {
-  console.log('Login:', credentials)
-  const response = await fetch(`localhost:8080/auth/login`, {
+async function login(credentials: FormData): Promise<AuthRes> {
+  const username = credentials.get('email')
+  const password = credentials.get('password')
+
+  const authReq = { username, password }
+
+  const response = await fetch(`http://localhost:8080/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body: credentials
+    body: JSON.stringify(authReq)
   })
 
   if (!response.ok) {
