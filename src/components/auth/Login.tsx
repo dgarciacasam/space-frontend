@@ -2,21 +2,49 @@ import { useState } from 'react'
 import { AlternativeLoginButton } from './AlternativeLoginButton'
 import GoogleLogo from '../icons/GoogleLogo'
 import GithubLogo from '../icons/GithubLogo'
-import { useNavigate } from 'react-router-dom'
 import UserLogo from '../icons/UserLogo'
-import { checkEmail } from '../../../utils/utils'
+import { checkEmail, setGuestUser } from '../../../utils/utils'
 
 interface LoginProps {
   setIsRegistering: (value: boolean) => void
 }
 
+async function login(credentials: FormData): Promise<any> {
+  console.log('Login:', credentials)
+  const response = await fetch(`localhost:8080/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: credentials
+  })
+
+  if (!response.ok) {
+    throw new Error('Error en el login')
+  }
+
+  const data = await response.json()
+
+  // Guardar el token en localStorage
+  localStorage.setItem('token', data.token)
+
+  return data
+}
+
 export const Login = ({ setIsRegistering }: LoginProps) => {
-  const [email, setEmail] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate()
-  const setGuestUser = () => {
-    localStorage.setItem('guest', 'true')
-    navigate('/dashboard')
+
+  const handleLogin = async (formData: FormData) => {
+    console.log('Login called')
+    const email = formData.get('email')
+    const isEmailValid = checkEmail(email?.toString())
+    if (!isEmailValid) {
+      alert('Invalid email address')
+      return
+    }
+    setShowPassword(true)
+    login(formData)
   }
 
   return (
@@ -26,16 +54,14 @@ export const Login = ({ setIsRegistering }: LoginProps) => {
           <h2 className='text-3xl font-bold'>Sign in to Space</h2>
           <p>Start gaining space by managing your time</p>
         </header>
-        <form action='' className='flex w-full flex-col'>
+        <form action={handleLogin} className='flex w-full flex-col'>
           <input
             type='email'
             id='email'
             placeholder='Email address'
+            name='email'
             className='w-full rounded-md border border-gray-600 bg-[#0A0A0A] px-4 py-3 font-light text-white transition-colors duration-200 hover:border hover:border-gray-500'
             autoComplete='email'
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && checkEmail(email)) setShowPassword(true)
-            }}
           />
 
           <div
@@ -50,14 +76,14 @@ export const Login = ({ setIsRegistering }: LoginProps) => {
               type='password'
               id='password'
               placeholder='Password'
+              name='password'
               className='w-full rounded-md border border-gray-600 bg-[#0A0A0A] px-4 py-3 font-light text-white hover:border hover:border-gray-500'
               autoComplete='current-password'
             />
           </div>
 
           <button
-            type='button'
-            onClick={() => setShowPassword(true)}
+            type='submit'
             className='mt-3 w-full cursor-pointer rounded-md bg-white px-4 py-3 font-medium text-black'
           >
             Continue with email
